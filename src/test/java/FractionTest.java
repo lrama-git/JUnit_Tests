@@ -24,7 +24,8 @@ class FractionTest {
     void getDivisor() {
         Fraction f = new Fraction(1,10);
 
-        Assertions.assertEquals(1,f.getDivisor());
+        //du erwartest dass divisor 10 ist
+        Assertions.assertEquals(10,f.getDivisor());
     }
 
     @org.junit.jupiter.api.Test
