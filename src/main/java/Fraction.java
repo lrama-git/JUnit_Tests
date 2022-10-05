@@ -7,6 +7,7 @@ public class Fraction {
         this.dividend = dividend;
         this.divisor = divisor;
     }
+    //jar push prüfung
 
 
     public int getDividend() {
