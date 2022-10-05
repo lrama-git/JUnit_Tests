@@ -1,3 +1,5 @@
+package htl.steyr.ac.at;
+
 public class Fraction {
 
     private int dividend = 1;
@@ -72,13 +74,13 @@ public class Fraction {
         result.setDividend(this.getDividend() * other.getDivisor()); //Kreuzrechnen
 
         return result;
-        //return new Fraction((this.dividend*other.dividend), this.divisor/other.divisor);
+        //return new htl.steyr.ac.at.Fraction((this.dividend*other.dividend), this.divisor/other.divisor);
     }
 
     public Fraction shorten() {
         /**
          * @ToDo
-         * shorten the Fraction
+         * shorten the htl.steyr.ac.at.Fraction
          */
 
         //-----------------------------------------------ggT
@@ -109,7 +111,7 @@ public class Fraction {
         //ergebnis einen neuen bruch der ein
         // this wäre 4/10
         //other wäre 7/8
-        //28/80 --> new Fraction
+        //28/80 --> new htl.steyr.ac.at.Fraction
     }
 
     @Override
