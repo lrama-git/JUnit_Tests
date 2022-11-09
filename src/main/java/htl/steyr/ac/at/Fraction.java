@@ -17,7 +17,6 @@ public class Fraction {
 
 
 
-
     public int getDividend() {
         return dividend;
     }

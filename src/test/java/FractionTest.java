@@ -38,6 +38,7 @@ class FractionTest {
             }
         });
 
+
         Assertions.assertDoesNotThrow(() -> connect("")); //kommz raus dass war wir im retunr programmiert haben
 
         /**
