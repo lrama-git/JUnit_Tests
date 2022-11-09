@@ -64,6 +64,93 @@ class FractionTest {
         });
     }
 
+    @Test
+    @Order(3)
+    void connectToSpecificDatabase() {
+        Assertions.assertDoesNotThrow(() -> connect("testdb"));
+
+    }
+
+    @Test
+    @Order(4)
+    void createTable() {
+        Assertions.assertDoesNotThrow(() -> {
+            Connection c = connect("testdb");
+
+            Statement s = c.createStatement();
+            s.executeUpdate("CREATE TABLE testtable (mycolumn VARCHAR(255) NULL)");
+
+            //was ist schlecht an dem?
+
+            s.close();
+            c.close();
+        });
+    }
+
+    @Test
+    @Order(5)
+    void insertIntoTabe() {
+        Assertions.assertDoesNotThrow(() -> {
+            Connection c = connect("testdb");
+
+            Statement s = c.createStatement();
+            s.executeUpdate("INSERT INTO testtable (mycolumn) VALUES ('hallo')");
+
+            s.close();
+            c.close();
+        });
+    }
+
+    @Test
+    @Order(6)
+    void selectFromTable() {
+        Assertions.assertDoesNotThrow(() -> {
+            Connection c = connect("testdb");
+
+            Statement s = c.createStatement();
+            ResultSet res = s.executeQuery("SELECT * FROM testtable LIMIT 1");
+
+            if (res.first()) {
+                Assertions.assertEquals(res.getString("mycolumn"), "hallo");
+            }
+
+            s.close();
+            c.close();
+        });
+    }
+
+    @Test
+    @Order(7)
+    void deleteInsert() {
+        Assertions.assertDoesNotThrow(() -> {
+            Connection c = connect("testdb");
+
+            Statement s = c.createStatement();
+            s.executeUpdate("DELETE FROM testtable");
+
+
+
+            s.close();
+            c.close();
+        });
+    }
+
+
+    @Test
+    @Order(8)
+    void deleteDatabase() {
+        Assertions.assertDoesNotThrow(() -> {
+            Connection c = connect("testdb");
+
+            Statement s = c.createStatement();
+            s.executeUpdate("DROP TABLE testtable");
+
+
+            s.close();
+            c.close();
+        });
+    }
+
 //
 //    @Test
 //    @Order(1)
