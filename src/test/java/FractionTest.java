@@ -110,7 +110,7 @@ class FractionTest {
             Statement s = c.createStatement();
             ResultSet res = s.executeQuery("SELECT * FROM testtable LIMIT 1");
 
-            if (res.first()) {
+            if (res.next()) {
                 Assertions.assertEquals(res.getString("mycolumn"), "hallo");
             }
 
@@ -138,12 +138,27 @@ class FractionTest {
 
     @Test
     @Order(8)
-    void deleteDatabase() {
+    void deleteTable() {
         Assertions.assertDoesNotThrow(() -> {
             Connection c = connect("testdb");
 
             Statement s = c.createStatement();
             s.executeUpdate("DROP TABLE testtable");
+
+
+            s.close();
+            c.close();
+        });
+    }
+
+    @Test
+    @Order(8)
+    void deleteDatabase() {
+        Assertions.assertDoesNotThrow(() -> {
+            Connection c = connect("testdb");
+
+            Statement s = c.createStatement();
+            s.executeUpdate("DROP DATABASE testdb");
 
 
             s.close();
