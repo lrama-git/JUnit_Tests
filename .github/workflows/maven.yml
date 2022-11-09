@@ -29,7 +29,10 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-
+          
+      - name: Start MySQL Server
+        run:  sudo service mysql start
+        
       - name: Build
         run: mvn --batch-mode -DskipTests package
 
