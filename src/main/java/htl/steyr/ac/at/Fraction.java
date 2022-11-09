@@ -1,5 +1,9 @@
 package htl.steyr.ac.at;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class Fraction {
 
     private int dividend = 1;
@@ -10,6 +14,8 @@ public class Fraction {
         this.divisor = divisor;
     }
     //jar push prüfung
+
+
 
 
     public int getDividend() {

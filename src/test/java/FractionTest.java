@@ -1,8 +1,118 @@
 import htl.steyr.ac.at.Fraction;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.ThrowingSupplier;
+
+import java.sql.*;
 
 class FractionTest {
+    private Connection connect = null;
+    static Connection postgres;
+
+    private static Connection connect(String db) throws SQLException {
+        Connection conn = null;
+
+        try {
+            if (db.length() <= 0) {
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "root");
+            } else {
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db, "root", "root"); //hänge ich einfach dazu
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+
+        }
+        return conn;
+    }
+
+    @Test
+    @Order(1)
+    void connectToDatabase() {
+        Assertions.assertDoesNotThrow(new ThrowingSupplier<Object>() {
+            @Override
+            public Connection get() throws Throwable {
+                return connect("");
+            }
+        });
+
+        Assertions.assertDoesNotThrow(() -> connect("")); //kommz raus dass war wir im retunr programmiert haben
+
+        /**
+         * Throwin ist ein interface --> ich implementiere dieses interface in einer neuen annonymen klasse
+         * im interface ist nur get()
+         * ich kann lantaxsyntax immer anwendern, wenn ich interfaces impementier wenn sie nur einer methode implementieren
+         * und kann sie aufreufen, sobaal es 2 sind kann ich lanatxsynatx nicht verwenden
+         *
+         * was nach -> kommt ist der inhalt der funktion get()
+         */
+    }
+
+    @Test
+    @Order(2)
+    void createDatabase() {
+        Assertions.assertDoesNotThrow(() -> {
+            Connection c = connect("");
+
+            Statement s = c.createStatement();
+            s.executeUpdate("CREATE DATABASE testdb");
+
+            s.close();
+            c.close();
+        });
+    }
+
+//
+//    @Test
+//    @Order(1)
+//    public void createDatabase() throws ClassNotFoundException, SQLException {
+//        Class.forName("com.mysql.jdbc.Driver");
+//        Connection mysql = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fraction?useSSL=false", "root", "root");
+//
+//        PreparedStatement db = mysql.prepareStatement("CREATE DATABSE `db`");
+//        Assertions.assertFalse(db.execute());
+//
+//    }
+//
+//    @Test
+//    @Order(2)
+//    public void reconnectToDatabase() throws ClassNotFoundException, SQLException {
+//        Class.forName("com.mysql.jdbc.Driver");
+//        Connection mysql = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fraction?useSSL=false", "root", "root");
+//
+//        mysql.close();
+//        mysql = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fraction?useSSL=false", "root", "root");
+//        Assertions.assertNotNull(mysql);
+//    }
+//
+//    @Test
+//    @Order(3)
+//    public void connectDatabase() throws SQLException {
+//
+//        Assertions.assertNotNull(postgres);
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        Connection mysql = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fraction?useSSL=false", "root", "root");
+//        //Connection mysql = connect("jdbc:mysql://localhost:3306/Fraction?user=root&password=root");
+//        Assertions.assertNotNull(mysql);
+//        System.out.println(postgres.getClientInfo());
+//
+//
+//        PreparedStatement table = mysql.prepareStatement("CREATE TABLE 'db.Schoolclass' (`Name` varchar(255) )");
+//        Assertions.assertFalse(table.execute());
+//
+//        PreparedStatement row = mysql.prepareStatement("INSERT INTO 'db.Schoolclass' (` Name` ) values " + "('Nita')");
+//
+//        Assertions.assertFalse(row.execute());
+//
+//        PreparedStatement select = mysql.prepareStatement("SELECT * From `db.Persons`");
+//    }
+
 
     @org.junit.jupiter.api.Test
     void getDividend() {
