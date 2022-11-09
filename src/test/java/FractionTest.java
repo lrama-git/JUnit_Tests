@@ -1,14 +1,12 @@
 import htl.steyr.ac.at.Fraction;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.ThrowingSupplier;
 
 import java.sql.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FractionTest {
-    private Connection connect = null;
-    static Connection postgres;
+
 
     private static Connection connect(String db) throws SQLException {
         Connection conn = null;
@@ -42,7 +40,8 @@ class FractionTest {
         Assertions.assertDoesNotThrow(() -> connect("")); //kommz raus dass war wir im retunr programmiert haben
 
         /**
-         * Throwin ist ein interface --> ich implementiere dieses interface in einer neuen annonymen klasse
+         *
+         *
          * im interface ist nur get()
          * ich kann lantaxsyntax immer anwendern, wenn ich interfaces impementier wenn sie nur einer methode implementieren
          * und kann sie aufreufen, sobaal es 2 sind kann ich lanatxsynatx nicht verwenden
